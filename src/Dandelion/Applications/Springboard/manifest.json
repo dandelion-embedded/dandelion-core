@@ -1,0 +1,17 @@
+{
+    "schema": 1,
+    "application": {
+        "name": "Springboard",
+        "developer": "Riccardo Persello",
+        "version" : {
+            "schema": 1,
+            "major": 0,
+            "minor": 0,
+            "revision": 1
+        },
+        "systemApp": true,
+        "launcher": true,
+        "visibleInLauncher": false,
+        "iconPath": null,
+    }
+}
