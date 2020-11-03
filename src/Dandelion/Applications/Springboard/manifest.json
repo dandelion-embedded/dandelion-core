@@ -12,6 +12,6 @@
         "systemApp": true,
         "launcher": true,
         "visibleInLauncher": false,
-        "iconPath": null,
+        "iconPath": null
     }
 }
