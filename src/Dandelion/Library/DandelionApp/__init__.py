@@ -40,6 +40,8 @@ class DandelionApp:
         self.app_container.set_height(lv.scr_act().get_height() - self.top_bar.get_height())
         self.app_container.align(self.top_bar, lv.ALIGN.OUT_BOTTOM_MID, 0, 0)
 
+    def start(self):
+        lv.event_send_refresh_recursive(self.scr)
         lv.scr_load(self.scr)
 
     def get_container(self):

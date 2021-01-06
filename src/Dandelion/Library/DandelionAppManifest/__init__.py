@@ -14,10 +14,11 @@ class AppVersion:
 
 class DandelionAppManifest:
 
-    def __init__(self, j, path):
+    def __init__(self, j, moduleName, path):
 
         # Set module name
-        self.moduleName = path
+        self.moduleName = moduleName
+        self.appPath = path
 
         # Load JSON and select correct decoder
         jsondict = ujson.load(j)

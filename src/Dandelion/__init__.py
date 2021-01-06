@@ -72,7 +72,8 @@ class Dandelion:
     def launch_app(self, app_module, app_manifest):
         self.currentApp = app_module.ENTRYPOINT(app_manifest)
 
-    def discoverApplicationManifests(self) -> list[DandelionAppManifest]:
+    @staticmethod
+    def discoverApplicationManifests() -> list[DandelionAppManifest]:
         manifests = []
 
         for path in APPPATHS:
@@ -83,13 +84,12 @@ class Dandelion:
             app_folders = uos.listdir(path)
             for folder in app_folders:
                 try:
-                    mpath = path + "/" + folder + "/manifest.json"
-                    with open(mpath) as json:
-                        manifest = DandelionAppManifest(json, folder)
+                    fullPath = path + "/" + folder + "/manifest.json"
+                    with open(fullPath) as json:
+                        manifest = DandelionAppManifest(json, folder, path + "/" + folder + "/")
                         manifests.append(manifest)
-                        self._log.info("Loaded app %s.", manifest.name)
                 except OSError:
-                    self._log.error(
+                    logging.getLogger("Dandelion").error(
                         "Cannot decode manifest file for %s/%s", path, folder
                     )
 
