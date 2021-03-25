@@ -15,9 +15,9 @@ class DandelionApp:
 
         # Top bar base
         self.top_bar = lv.cont(self.scr)
-        self.top_bar.set_style_local_bg_color(
-            lv.cont.PART.MAIN, lv.STATE.DEFAULT, lv.color_hex(0x0)
-        )
+        # self.top_bar.set_style_local_bg_color(lv.cont.PART.MAIN,
+        #                                       lv.STATE.DEFAULT,
+        #                                       lv.color_hex(0x0))
         self.top_bar.set_width(lv.scr_act().get_width())
         self.top_bar.set_height(TOP_BAR_HEIGHT)
         self.top_bar.align(self.scr, lv.ALIGN.IN_TOP_MID, 0, 0)
@@ -37,7 +37,8 @@ class DandelionApp:
         # App container
         self.app_container = lv.cont(self.scr)
         self.app_container.set_width(lv.scr_act().get_width())
-        self.app_container.set_height(lv.scr_act().get_height() - self.top_bar.get_height())
+        self.app_container.set_height(lv.scr_act().get_height() -
+                                      self.top_bar.get_height())
         self.app_container.align(self.top_bar, lv.ALIGN.OUT_BOTTOM_MID, 0, 0)
 
     def start(self):
@@ -52,10 +53,12 @@ class DandelionApp:
 
             # Clock data
             ltime = utime.localtime()
-            self.clock_label.set_text("{:0>2}:{:0>2}".format(ltime[3], ltime[4]))
+            self.clock_label.set_text("{:0>2}:{:0>2}".format(
+                ltime[3], ltime[4]))
 
             # Clock realign
             if self.manifest.launcher:
                 self.clock_label.align(self.top_bar, lv.ALIGN.CENTER, 0, 0)
             else:
-                self.clock_label.align(self.top_bar, lv.ALIGN.IN_LEFT_MID, 8, 0)
+                self.clock_label.align(self.top_bar, lv.ALIGN.IN_LEFT_MID, 8,
+                                       0)

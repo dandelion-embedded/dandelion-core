@@ -12,6 +12,6 @@
         "systemApp": true,
         "launcher": false,
         "visibleInLauncher": true,
-        "iconPath": "settings.png"
+        "iconPath": "settings.icn"
     }
 }

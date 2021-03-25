@@ -2,26 +2,26 @@
     "python.linting.enabled": true,
     "python.jediEnabled": false,
     "python.autoComplete.extraPaths": [
-        ".micropy/esp32-1.13.0/frozen",
-        ".micropy/esp32-1.13.0/stubs",
+        ".micropy/esp32-1.14.0/frozen",
+        ".micropy/esp32-1.14.0/stubs",
         ".micropy/dandelion-core"
     ],
     "python.autoComplete.typeshedPaths": [
-        ".micropy/esp32-1.13.0/frozen",
-        ".micropy/esp32-1.13.0/stubs",
+        ".micropy/esp32-1.14.0/frozen",
+        ".micropy/esp32-1.14.0/stubs",
         ".micropy/dandelion-core"
     ],
     "python.analysis.typeshedPaths": [
-        ".micropy/esp32-1.13.0/frozen",
-        ".micropy/esp32-1.13.0/stubs",
+        ".micropy/esp32-1.14.0/frozen",
+        ".micropy/esp32-1.14.0/stubs",
         ".micropy/dandelion-core"
     ],
     "python.linting.pylintEnabled": true,
     "python.languageServer": "Pylance",
+    "python.formatting.provider": "yapf",
     "python.analysis.extraPaths": [
-        ".micropy/esp32-1.13.0/frozen",
-        ".micropy/esp32-1.13.0/stubs",
+        ".micropy/esp32-1.14.0/frozen",
+        ".micropy/esp32-1.14.0/stubs",
         ".micropy/dandelion-core"
-    ],
-    "python.formatting.provider": "yapf"
+    ]
 }

@@ -16,7 +16,7 @@ class Springboard(DandelionApp):
         self.container = super().get_container()
         self.container.set_style_local_bg_color(lv.cont.PART.MAIN,
                                                 lv.STATE.DEFAULT,
-                                                lv.color_hex(0x0A0A0A))
+                                                lv.color_hex(0x000000))
 
         self.manifests = Dandelion.discoverApplicationManifests()
 
@@ -26,56 +26,25 @@ class Springboard(DandelionApp):
             if m.visibleInLauncher:
                 self.numberOfApps += 1
 
-        self.numberOfRows = self.container.get_height() // 100
         self.numberOfColumns = self.container.get_width() // 100
 
-        self.numberOfPages = 2  # (len(manifests) / (numberOfColumns * numberOfRows))
-
-        # Tabview
-        self.tabview = lv.tabview(self.container)
-        self.tabview.set_btns_pos(lv.tabview.TAB_POS.NONE)
-        self.tabview.set_size(self.container.get_width(),
+        # Scrollview
+        self.scrollview = lv.page(self.container)
+        self.scrollview.set_size(self.container.get_width(),
                               self.container.get_height())
-        self.tabview.align(self.container, lv.ALIGN.IN_TOP_LEFT, 0, 0)
-        self.tabview.set_style_local_bg_opa(lv.tabview.PART.BG,
+        self.scrollview.align(self.container, lv.ALIGN.IN_TOP_LEFT, 0, 0)
+        self.scrollview.set_style_local_bg_opa(lv.page.PART.BG,
                                             lv.STATE.DEFAULT, lv.OPA._0)
 
-        # Generate pages
-        self.pageContainers = []
-        for i in range(self.numberOfPages):
-            page = self.tabview.add_tab("Page {}".format(i))
-            page.set_style_local_pad_all(lv.page.PART.SCROLLABLE,
-                                         lv.STATE.DEFAULT, 0)
-            c = lv.cont(page)
-            c.set_fit(lv.FIT.PARENT)
-            c.set_click(False)
-            c.set_style_local_bg_opa(lv.tabview.PART.BG, lv.STATE.DEFAULT,
-                                     lv.OPA._0)
-            c.set_layout(lv.LAYOUT.GRID)
-
-            pad = (c.get_width() -
-                   (80 * self.numberOfColumns)) / (self.numberOfColumns + 1)
-            c.set_style_local_pad_left(lv.cont.PART.MAIN, lv.STATE.DEFAULT,
-                                       int(pad))
-            c.set_style_local_pad_right(lv.cont.PART.MAIN, lv.STATE.DEFAULT,
-                                        int(pad))
-            c.set_style_local_pad_inner(lv.cont.PART.MAIN, lv.STATE.DEFAULT,
-                                        int(pad))
-            self.pageContainers.append(c)
+        # Group
+        self.scrollgroup = lv.group_create()
 
         # Populate pages
         index = 0
-        for m in range(0, 10):
-            page: int = index // (self.numberOfRows * self.numberOfColumns)
-            current_container = self.pageContainers[page]
-            # with open('/Dandelion/Applications/Settings/icon.png' ,'rb') as f:
-            # png_data = f.read()
+        for m in filter(lambda x: (x.visibleInLauncher), self.manifests):
 
-            # png_img_dsc = lv.img_dsc_t({
-            # 'data_size': len(png_data),
-            # 'data': png_data})
-
-            i = SpringboardIcon(current_container, self.manifests[0])
+            i = SpringboardIcon(self.scrollview, m)
+            self.scrollgroup.add_obj(i)
             index += 1
 
         super().start()
@@ -84,8 +53,6 @@ class Springboard(DandelionApp):
 class SpringboardIcon(lv.cont):
     def __init__(self, parent, manifest: DandelionAppManifest):
         super().__init__(parent)
-
-        gc.collect()
 
         self.set_size(80, 80)
         self.set_style_local_bg_opa(self.PART.MAIN, lv.STATE.DEFAULT,
@@ -101,18 +68,19 @@ class SpringboardIcon(lv.cont):
                 "always_zero": 0,
                 "w": 64,
                 "h": 64,
-                "cf": lv.img.CF.INDEXED_8BIT,
+                "cf": lv.img.CF.INDEXED_4BIT,
             },
             "data_size": len(icn_data),
             "data": icn_data,
         })
 
-        # self.icon.set_size(64, 64)
-        self.icon.set_src(img_dsc)
+        self.icon.set_size(64, 64)
         self.icon.align(self, lv.ALIGN.IN_TOP_MID, 0, 0)
+        self.icon.set_src(img_dsc)
+        self.icon.set_offset_x(-8)
 
         self.label = lv.label(self)
-        self.label.set_text("Test test")
+        self.label.set_text(manifest.name)
         self.label.align(self, lv.ALIGN.IN_BOTTOM_MID, 0, 0)
 
 
