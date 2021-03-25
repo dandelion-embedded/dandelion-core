@@ -1,0 +1,17 @@
+{
+    "schema": 1,
+    "application": {
+        "name": "Settings",
+        "developer": "Riccardo Persello",
+        "version" : {
+            "schema": 1,
+            "major": 0,
+            "minor": 0,
+            "revision": 0
+        },
+        "systemApp": true,
+        "launcher": false,
+        "visibleInLauncher": true,
+        "iconPath": "settings.png"
+    }
+}

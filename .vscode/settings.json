@@ -22,5 +22,6 @@
         ".micropy/esp32-1.13.0/frozen",
         ".micropy/esp32-1.13.0/stubs",
         ".micropy/dandelion-core"
-    ]
+    ],
+    "python.formatting.provider": "yapf"
 }

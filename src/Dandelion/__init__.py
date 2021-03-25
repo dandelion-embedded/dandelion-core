@@ -1,5 +1,5 @@
 # System
-import logging
+import Dandelion.Library.Logging as logging
 import sys
 import machine
 import uos
@@ -7,11 +7,6 @@ import uos
 # lvgl
 import lvgl as lv
 import lvesp32
-
-# M5Stack drivers
-from m5stack import M5Stack
-from axpili9342 import *
-from ft6336u import ft6336u
 
 # Dandelion imports
 from Dandelion.Library.DandelionAppManifest import DandelionAppManifest
@@ -30,24 +25,21 @@ class Dandelion:
         # Initialize GUI drivers (display + touch + M5Stack)
         lv.init()
         if disp is None:
-            self._log.info(
-                "Display was not specified. Creating a new display with a new M5Stack."
-            )
-            self.ms = M5Stack()
-            self.disp = ili9342(m5stack=self.ms)
-        else:
-            self.ms = disp.m5stack
+            self._log.error("Display was not specified. Please add a display to continue.")
+            sys.exit()
 
         if touch is None:
-            self._log.info("Touch panel was not specified. Creating a new touch panel.")
-            self.touch = ft6336u()
+            self._log.warning(
+                "Touch panel was not specified. Specify it if you have one.")
 
         # Init theme
         self.lv_theme = DandelionTheme()
 
         # Init GUI refresh
         ref_timer = machine.Timer(0)
-        ref_timer.init(period=500, mode=machine.Timer.PERIODIC, callback=self.global_refresher)
+        ref_timer.init(period=500,
+                       mode=machine.Timer.PERIODIC,
+                       callback=self.global_refresher)
 
         # TODO: Show boot screen
 
@@ -62,7 +54,8 @@ class Dandelion:
                 break
         else:
             launcherManifest = None
-            self._log.critical("No launchers found. Unable to start Dandelion Core.")
+            self._log.critical(
+                "No launchers found. Unable to start Dandelion Core.")
             sys.exit()
 
         # Run launcher
@@ -86,15 +79,14 @@ class Dandelion:
                 try:
                     fullPath = path + "/" + folder + "/manifest.json"
                     with open(fullPath) as json:
-                        manifest = DandelionAppManifest(json, folder, path + "/" + folder + "/")
+                        manifest = DandelionAppManifest(
+                            json, folder, path + "/" + folder + "/")
                         manifests.append(manifest)
                 except OSError:
                     logging.getLogger("Dandelion").error(
-                        "Cannot decode manifest file for %s/%s", path, folder
-                    )
+                        "Cannot decode manifest file for %s/%s", path, folder)
 
         return manifests
-
 
     def global_refresher(self, _):
         lv.event_send_refresh_recursive(lv.scr_act())
