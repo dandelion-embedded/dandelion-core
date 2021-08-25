@@ -1,7 +1,7 @@
 {
     "name": "dandelion-core",
     "stubs": {
-        "esp32-1.14.0": "1.3.2"
+        "esp32-micropython-1.16.0": "1.3.9"
     },
     "dev-packages": {
         "micropy-cli": "*"

@@ -6,7 +6,6 @@ import uos
 
 # lvgl
 import lvgl as lv
-import lvesp32
 
 # Dandelion imports
 from Dandelion.Library.DandelionAppManifest import DandelionAppManifest
